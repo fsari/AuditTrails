@@ -1,0 +1,58 @@
+﻿@using AuditTrails.Models
+@using PagedList
+@using PagedList.Mvc
+@model PagedList.IPagedList<AuditTrails.Models.Audit>
+
+@{
+    ViewBag.Title = "AuditTrails";
+}
+
+<h2>AuditTrails</h2>
+ 
+<table class="table">
+    <tr>
+        <th></th>
+        <th>
+            Username
+        </th>
+        <th>
+            IpAddress
+        </th>
+        <th>
+            Url
+        </th>
+        <th>
+            Timestamp
+        </th> 
+        <th>
+            Session Id
+        </th> 
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>@item.Id</td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IpAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UrlAccessed)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Timestamp)
+        </td> 
+        <td>
+            @Html.DisplayFor(modelItem => item.SessionId)
+        </td> 
+    </tr>
+    
+    @*<tr>
+        <td colspan="6">@item.Data</td>
+    </tr>*@
+}
+
+</table>
+@Html.PagedListPager((IPagedList<Audit>)Model, page => Url.Action("AuditTrails", new { page = page }))

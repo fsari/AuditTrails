@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using AuditTrails.Models;
+using PagedList;
 
 namespace AuditTrails.Controllers
 {
@@ -46,6 +47,17 @@ namespace AuditTrails.Controllers
             db.SaveChanges();
 
             return RedirectToAction("Index");
+        }
+
+        public ActionResult AuditTrails(int ? page)
+        {
+            var db = new ApplicationDbContext();
+
+            var pageNumber = page ?? 1;
+
+            var audits = db.AuditRecords.OrderByDescending(x => x.Id).ToPagedList(pageNumber, 20);
+
+            return View(audits);
         }
 
     }
